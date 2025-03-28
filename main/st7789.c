@@ -192,7 +192,7 @@ void spi_display_init(void){
 	spi_device_interface_config_t devcfg={
 		.clock_speed_hz = SPI_MASTER_FREQ_20M,
 		.queue_size = SPI_TRANSACTION_POOL_SIZE,
-		.mode = 2,
+		.mode = 3,
 		.flags = SPI_DEVICE_NO_DUMMY,
 	};
 

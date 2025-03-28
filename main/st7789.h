@@ -17,12 +17,12 @@ extern "C"
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 
-#define CONFIG_MOSI_GPIO	P1_13_PIN
-#define CONFIG_SCLK_GPIO	P1_12_PIN
-#define CONFIG_CS_GPIO		P1_15_PIN
-#define CONFIG_DC_GPIO		P1_14_PIN
-#define CONFIG_RESET_GPIO	P1_16_PIN
-#define CONFIG_BL_GPIO		P2_8_PIN
+#define CONFIG_MOSI_GPIO 23 // 13 // P1_13_PIN
+#define CONFIG_SCLK_GPIO 18 // 12 // P1_12_PIN
+#define CONFIG_CS_GPIO	 -1 // 15 //	P1_15_PIN
+#define CONFIG_DC_GPIO	 2  // 14  //P1_14_PIN
+#define CONFIG_RESET_GPIO 4 // 16 //	P1_16_PIN
+#define CONFIG_BL_GPIO		32 // 8  //P2_8_PIN
 
 typedef enum _disp_spi_send_flag_t {
     DISP_SPI_SEND_QUEUED        = 0x00000000,
@@ -67,8 +67,8 @@ typedef enum _disp_spi_send_flag_t {
 
 #define ST7789_INVERT_COLORS            1//CONFIG_LV_INVERT_COLORS
 
-#define MY_DISP_HOR_RES	320//240
-#define MY_DISP_VER_RES 240//320
+#define MY_DISP_HOR_RES	240 //320//240
+#define MY_DISP_VER_RES 240 //320
 #define DISP_BUF_SIZE MY_DISP_HOR_RES * MY_DISP_VER_RES
 #define SPI_BUS_MAX_TRANSFER_SZ (DISP_BUF_SIZE * 2)
 

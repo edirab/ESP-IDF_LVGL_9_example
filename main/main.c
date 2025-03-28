@@ -67,7 +67,7 @@ static void gui_task(void *arg){
 
     static lv_style_t st;
     lv_style_init(&st);
-    lv_style_set_text_font(&st, &lv_font_montserrat_28);
+    lv_style_set_text_font(&st, &lv_font_montserrat_14);
 
     // Apply the style to the label
     lv_obj_add_style(label, &st, 0);
@@ -81,13 +81,13 @@ static void gui_task(void *arg){
     lv_style_set_bg_opa(&style_indic, LV_OPA_COVER);
     lv_style_set_bg_color(&style_indic, lv_palette_main(LV_PALETTE_LIGHT_GREEN));
 
-    bar = lv_bar_create(lv_scr_act());
+    lv_obj_t* bar = lv_bar_create(lv_scr_act());
     lv_obj_set_size(bar, 60, 15);
     lv_obj_align(bar,LV_ALIGN_TOP_RIGHT,-5,2);
     lv_bar_set_value(bar, 85, LV_ANIM_ON);
     lv_obj_add_style(bar, &style_indic, LV_PART_INDICATOR);
 
-    label_bat = lv_label_create(lv_scr_act());
+    lv_obj_t* label_bat = lv_label_create(lv_scr_act());
     lv_label_set_text(label_bat, "58%");
     lv_obj_align(label_bat, LV_ALIGN_TOP_RIGHT, -15, 2);
     lv_label_set_text(label_bat, "85%");
