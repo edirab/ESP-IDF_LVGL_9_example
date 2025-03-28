@@ -236,6 +236,11 @@ void st7789_flush(lv_display_t * disp, const lv_area_t * area, uint8_t * pixmap)
     uint16_t offsety1 = area->y1;
     uint16_t offsety2 = area->y2;
 
+#define LV_HOR_RES_MAX 240
+#define LV_VER_RES_MAX 240
+// #define CONFIG_LV_DISPLAY_ORIENTATION_PORTRAIT 1
+// #define CONFIG_LV_DISPLAY_ORIENTATION_LANDSCAPE_INVERTED 1
+
 #if (CONFIG_LV_TFT_DISPLAY_OFFSETS)
     offsetx1 += CONFIG_LV_TFT_DISPLAY_X_OFFSET;
     offsetx2 += CONFIG_LV_TFT_DISPLAY_X_OFFSET;
@@ -429,7 +434,7 @@ void st7789_send_data(void * data, uint16_t length)
     disp_spi_send_data(data, length);
 }
 
-#define SIZE_B 23040	//2*DISP_BUF_SIZE / 10;
+#define SIZE_B 23040	//2*DISP_BUF_SIZE / 10;  not true but don't change it
 static void st7789_send_color(void * data, size_t length)
 {
 	static uint8_t buf_c[SIZE_B];
