@@ -236,10 +236,6 @@ void st7789_flush(lv_display_t * disp, const lv_area_t * area, uint8_t * pixmap)
     uint16_t offsety1 = area->y1;
     uint16_t offsety2 = area->y2;
 
-#define LV_HOR_RES_MAX 240
-#define LV_VER_RES_MAX 240
-// #define CONFIG_LV_DISPLAY_ORIENTATION_PORTRAIT 1
-// #define CONFIG_LV_DISPLAY_ORIENTATION_LANDSCAPE_INVERTED 1
 
 #if (CONFIG_LV_TFT_DISPLAY_OFFSETS)
     offsetx1 += CONFIG_LV_TFT_DISPLAY_X_OFFSET;

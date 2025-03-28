@@ -46,7 +46,6 @@ typedef enum _disp_spi_send_flag_t {
 #define ST7789_DC       CONFIG_DC_GPIO
 #define ST7789_RST      CONFIG_RESET_GPIO
 
-// #define CONFIG_LV_DISPLAY_ORIENTATION 0 //(landscape)
 #define CONFIG_LV_DISPLAY_ORIENTATION 1 //(portrait inverted)
 
 #define SPI_TRANSACTION_POOL_SIZE 50	/* maximum number of DMA transactions simultaneously in-flight */

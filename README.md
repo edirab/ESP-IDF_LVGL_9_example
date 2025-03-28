@@ -1,3 +1,11 @@
+It's a fork from https://github.com/AppendixPi/ESP-IDF_LVGL_9_example/tree/main# 
+
+![](lvgl_demo.gif)
+
+
+### Original readme below
+=========================
+
 # ESP-IDF and LVGL 9.1.0 example
 
 ![](https://www.gabrielecalabrese.com/wp-content/uploads/2024/07/DSC06694.jpeg)
