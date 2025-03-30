@@ -60,7 +60,7 @@ static void gui_task(void *arg){
     lv_obj_t *label = lv_label_create(lv_scr_act());
 
     // Set the text of the label
-    lv_label_set_text(label, "ESP-IDF + LVGL 9.1.0");
+    lv_label_set_text(label, "ESP-IDF + LVGL 9.2.2 \xB0C");
 
     // Align the label to the bottom center of the parent
     lv_obj_align(label, LV_ALIGN_BOTTOM_MID, 0, 0);

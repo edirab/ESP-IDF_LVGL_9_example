@@ -17,6 +17,7 @@
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "rom/gpio.h"
+#include <string.h>
 
 /*********************
  *      DEFINES
