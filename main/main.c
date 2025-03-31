@@ -10,15 +10,16 @@
 #include "esp_timer.h"
 #include "esp_log.h"
 
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
 #define LV_TICK_PERIOD_MS 1
 
-SemaphoreHandle_t xGuiSemaphore;
-
-TaskHandle_t gui_task_Handle;
 
 lv_obj_t * slider1;
 lv_obj_t * arc;
 
+int slide_val = 0;
 
 static void lv_tick_task(void *arg) {
     (void) arg;
@@ -26,7 +27,8 @@ static void lv_tick_task(void *arg) {
     lv_tick_inc(LV_TICK_PERIOD_MS);
 }
 
-static void gui_task(void *arg){
+
+void gui_task(void *pvParameters) {
 
     lv_init();
 
@@ -88,44 +90,51 @@ static void gui_task(void *arg){
     lv_obj_add_style(bar, &style_indic, LV_PART_INDICATOR);
 
     lv_obj_t* label_bat = lv_label_create(lv_scr_act());
-    lv_label_set_text(label_bat, "58%");
     lv_obj_align(label_bat, LV_ALIGN_TOP_RIGHT, -15, 2);
     lv_label_set_text(label_bat, "85%");
 
 
-    while(1){
-    	vTaskDelay(10 / portTICK_PERIOD_MS);
-    	if (pdTRUE == xSemaphoreTake(xGuiSemaphore, 50 / portTICK_PERIOD_MS)) {
-    		lv_task_handler();
-    		xSemaphoreGive(xGuiSemaphore);
+    while(1) 
+    {
+        ESP_LOGI(__FUNCTION__, "gui task while loop");
+
+        lv_slider_set_value(slider1, slide_val, LV_ANIM_ON);
+        lv_arc_set_value(arc, slide_val);
+    	
+    	slide_val ++;
+    	if(slide_val > 100)
+        {
+    		slide_val = 0;
     	}
 
+    	vTaskDelay(pdMS_TO_TICKS(10));
+        lv_task_handler();
     }
-
 }
+
+// void update_sliders(void *pvParameters) {
+//     while (1) 
+//     {	
+//         ESP_LOGI(__FUNCTION__, "Updating sliders");
+
+//         lv_slider_set_value(slider1, slide_val, LV_ANIM_ON);
+//         lv_arc_set_value(arc, slide_val);
+    	
+//     	slide_val ++;
+//     	if(slide_val > 100)
+//         {
+//     		slide_val = 0;
+//     	}
+//     	vTaskDelay(pdMS_TO_TICKS(100));
+//     }
+// }
 
 void app_main(void)
 {
-
-    xGuiSemaphore = xSemaphoreCreateMutex();
-
     spi_display_init();
     st7789_init();
-
-    xTaskCreatePinnedToCore(gui_task, "gui", 18*1024, NULL, 5, &gui_task_Handle,1 );
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
 	
-    int slide_val = 0;
-    while (1) {
-    	if (pdTRUE == xSemaphoreTake(xGuiSemaphore, 50 / portTICK_PERIOD_MS)) {	/*Take semaphore to update slider and arc values*/
-    		lv_slider_set_value(slider1, slide_val, LV_ANIM_ON);
-    		lv_arc_set_value(arc, slide_val);
-    		xSemaphoreGive(xGuiSemaphore);
-    	}
-    	slide_val ++;
-    	if(slide_val > 100){
-    		slide_val = 0;
-    	}
-    	vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
+    // Create the Hello World task
+    xTaskCreate(gui_task,       "lvgl_task",      18*1024, NULL, 2, NULL);
+    // xTaskCreate(update_sliders, "update_sliders", 2*1024, NULL, 2, NULL);
 }
