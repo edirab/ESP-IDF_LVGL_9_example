@@ -12,6 +12,7 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "uart1.h"
 
 #define LV_TICK_PERIOD_MS 1
 
@@ -136,7 +137,7 @@ void gui_task(void *pvParameters) {
 
     while(1) 
     {
-        ESP_LOGI(__FUNCTION__, "gui task while loop");
+        // ESP_LOGI(__FUNCTION__, "gui task while loop");
 
         // lv_slider_set_value(slider1, slide_val, LV_ANIM_ON);
         // lv_arc_set_value(arc, slide_val);
@@ -156,8 +157,11 @@ void app_main(void)
 {
     spi_display_init();
     st7789_init();
+    setup_uart1();
 	
     // Create the Hello World task
     xTaskCreate(gui_task,       "lvgl_task",      18*1024, NULL, 2, NULL);
     // xTaskCreate(update_sliders, "update_sliders", 2*1024, NULL, 2, NULL);
+
+    xTaskCreate(uart_echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, NULL, 2, NULL);
 }
